@@ -2,14 +2,15 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
-const BadRequestError = require("../errors/bad-request-error");
+const { BadRequestError, NotFoundError } = require("../errors/export");
 const asyncWrapper = require("../middleware/async");
 const bcrypt = require("bcrypt");
+
 const register = asyncWrapper(async (req, res) => {
-  const { email, password } = req.body;
-  console.log(password);
+  let { email, password } = req.body;
+
   if (!email || !password) {
-    throw new BadRequestError("Provide an email");
+    throw new BadRequestError("Provide an email and password");
   }
 
   const user = await prisma.user.create({
@@ -23,26 +24,34 @@ const register = asyncWrapper(async (req, res) => {
       },
     },
   });
-  const token = jwt.sign(
-    { userId: user.id, email: user.email, password: user.password },
-    "jwtSecret",
-    {
-      expiresIn: "30d",
-    }
-  );
-  res.status(StatusCodes.CREATED).json({ user: user, token: token });
-});
-
-const login = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await prisma.user.findFirst({
-    email: email,
-    password: password,
-  });
   const token = jwt.sign({ userId: user.id, email: user.email }, "jwtSecret", {
     expiresIn: "30d",
   });
-  res.status(StatusCodes.OK).json({ user: user, token: token });
-};
+  res.status(StatusCodes.CREATED).json({ user: user, token: token });
+});
+
+const login = asyncWrapper(async (req, res) => {
+  async (req, res) => {
+    const { email, password } = req.body;
+    if (!email && !password) {
+      throw new BadRequestError("Provide an email and password");
+    }
+    const user = await prisma.user.findUnique({
+      where: { email: email, password: password },
+    });
+    if (!user) {
+      throw new NotFoundError("User not found with this email and password");
+    }
+
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      "jwtSecret",
+      {
+        expiresIn: "30d",
+      }
+    );
+    res.status(StatusCodes.OK).json({ user: user, token: token });
+  };
+});
 
 module.exports = { login, register };
