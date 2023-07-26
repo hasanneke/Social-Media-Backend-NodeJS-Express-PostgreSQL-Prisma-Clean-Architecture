@@ -4,14 +4,13 @@ const app = express();
 const {
   notFoundMiddleWare,
   errorHandlerMiddleware,
-  authMiddleWare,
 } = require("./middleware/index");
 const { authRouter, postsRouter } = require("./routes/index");
 
 app.use(express.json());
 
 app.use("/auth", authRouter);
-app.use("/api/v1/posts", authMiddleWare, postsRouter);
+app.use("/api/v1/posts", postsRouter);
 
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);

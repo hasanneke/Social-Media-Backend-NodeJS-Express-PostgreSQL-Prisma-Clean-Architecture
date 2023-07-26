@@ -42,6 +42,9 @@ const login = asyncWrapper(async (req, res) => {
     }
     const user = await prisma.user.findUnique({
       where: { email: email, password: password },
+      include: {
+        profile: true,
+      },
     });
 
     if (!user) {

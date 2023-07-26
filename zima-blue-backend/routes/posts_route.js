@@ -1,8 +1,13 @@
 const express = require("express");
 const postsRouter = express.Router();
 
-const { getAllPosts } = require("../controller/posts_controller");
+const {
+  getAllPosts,
+  getPost,
+  createPost,
+} = require("../controller/posts_controller");
+const { authMiddleWare } = require("../middleware");
 
-postsRouter.route("/").get(getAllPosts);
-
+postsRouter.route("/").get(getAllPosts).post(createPost, authMiddleWare);
+postsRouter.route("/:id").get(getPost);
 module.exports = postsRouter;
