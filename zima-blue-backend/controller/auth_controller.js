@@ -24,28 +24,33 @@ const register = asyncWrapper(async (req, res) => {
       },
     },
   });
-  const token = jwt.sign({ userId: user.id, email: user.email }, "jwtSecret", {
-    expiresIn: "30d",
-  });
+  const token = jwt.sign(
+    { userId: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "30d",
+    }
+  );
   res.status(StatusCodes.CREATED).json({ user: user, token: token });
 });
 
 const login = asyncWrapper(async (req, res) => {
   async (req, res) => {
     const { email, password } = req.body;
-    if (!email && !password) {
+    if (!email || !password) {
       throw new BadRequestError("Provide an email and password");
     }
     const user = await prisma.user.findUnique({
       where: { email: email, password: password },
     });
+
     if (!user) {
       throw new NotFoundError("User not found with this email and password");
     }
 
     const token = jwt.sign(
       { userId: user.id, email: user.email },
-      "jwtSecret",
+      process.env.JWT_SECRET,
       {
         expiresIn: "30d",
       }
