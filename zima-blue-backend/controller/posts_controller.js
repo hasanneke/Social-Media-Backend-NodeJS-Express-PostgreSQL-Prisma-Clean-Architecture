@@ -24,16 +24,14 @@ const getPost = asyncWrapper(async (req, res) => {
 });
 
 const createPost = asyncWrapper(async (req, res) => {
-  const { userId, body: payload } = req;
-  console.log();
-  console.log(payload);
-  console.log(userId);
-  await prisma.post.create({
+  const { user, body: payload } = req;
+  const post = await prisma.post.create({
     data: {
-      authorId: userId,
+      authorId: user.userId,
       ...payload,
     },
   });
+  res.status(StatusCodes.CREATED).json(post);
 });
 
 const deletePost = asyncWrapper(async (req, res) => {});
