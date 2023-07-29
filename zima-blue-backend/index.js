@@ -4,9 +4,8 @@ const app = express();
 const {
   notFoundMiddleWare,
   errorHandlerMiddleware,
-  authMiddleWare,
-} = require("./middleware/index");
-const { authRouter, postsRouter } = require("./routes/index");
+} = require("./app//middleware/index");
+const { authRouter, postsRouter } = require("./app/routes/index");
 
 app.use(express.json());
 
