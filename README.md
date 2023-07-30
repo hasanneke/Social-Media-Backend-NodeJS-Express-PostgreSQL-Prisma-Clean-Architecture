@@ -17,16 +17,17 @@ This is a full-stack social media app built using Node.js, Express, Prisma, and 
 1. Clone the repository.
 
 2. Install the required dependencies by running the following command inside the Node.js project directory:
+   npm install
 
-3. Create a `.env` file in the root of the Node.js project and add the following configurations:
+4. Create a `.env` file in the root of the Node.js project and add the following configurations:
    DATABASE_URL=your_postgres_connection_string_here
    JWT_SECRET=your_jwt_secret_here
    -- Replace `your_postgres_connection_string_here` with your PostgreSQL database connection URL and `your_jwt_secret_here` with your desired JWT secret for authentication.
 
-4. Migrate the database schema using Prisma by running the following command:
+5. Migrate the database schema using Prisma by running the following command:
    -- npx prisma migrate dev
 
-5. Start the Node.js server:
+6. Start the Node.js server:
    -- npm start
 
 The app should now be running on your device/emulator.
