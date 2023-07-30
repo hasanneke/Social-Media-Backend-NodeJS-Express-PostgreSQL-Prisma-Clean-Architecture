@@ -1,29 +1,19 @@
 const express = require("express");
 const app = express();
-
 const {
   notFoundMiddleWare,
   errorHandlerMiddleware,
 } = require("./app//middleware/index");
-const { authRouter, postsRouter } = require("./app/routes/index");
+const routes = require("./app/routes/index");
+const expressConfig = require("./frameworks/webserver/express");
+const serverConfig = require("./frameworks/webserver/server");
 
-app.use(express.json());
-
-app.use("/auth", authRouter);
-app.use("/api/v1/posts", postsRouter);
+expressConfig(app, express);
+routes(app);
 
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
+
 const port = process.env.PORT || 3000;
 
-const start = async () => {
-  try {
-    app.listen(port, () =>
-      console.log(`Server is listening on port ${port}...`)
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-start();
+serverConfig(app, port);

@@ -32,4 +32,5 @@ const deletePost = asyncWrapper(async (req, res) => {
   const deletedPost = await deletePostRequest(req.user, postId);
   return res.status(StatusCodes.OK).json(deletedPost);
 });
+
 module.exports = { getAllPosts, getPost, createPost, deletePost };
