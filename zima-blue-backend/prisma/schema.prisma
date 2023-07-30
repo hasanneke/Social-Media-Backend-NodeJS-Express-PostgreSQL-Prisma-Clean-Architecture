@@ -17,22 +17,34 @@ model Post {
   title     String   @db.VarChar(255)
   content   String?
   published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
+  author    Profile     @relation(fields: [authorId], references: [id])
   authorId  Int
+  comments Comment[]
+}
+
+model Comment {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  post        Post @relation(fields: [postId], references: [id])
+  postId      Int
+  author      Profile @relation(fields: [authorId], references: [id])
+  authorId    Int
+  likes       Int
 }
 
 model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  id        Int     @id @default(autoincrement())
+  bio       String?
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int     @unique
+  posts     Post[]
+  comments  Comment[]
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  password String
-  name    String?
-  posts   Post[]
-  profile Profile?
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  profile   Profile?
 }
