@@ -1,18 +1,18 @@
-const { PrismaClient } = require("@prisma/client");
-const asyncWrapper = require("../middleware/async");
-const NotFoundError = require("../errors/not-found");
-const { StatusCodes } = require("http-status-codes");
-const BadRequestError = require("../errors/bad-request-error");
+const { PrismaClient } = require('@prisma/client');
+const asyncWrapper = require('../middleware/async');
+const NotFoundError = require('../errors/not-found');
+const { StatusCodes } = require('http-status-codes');
+const BadRequestError = require('../errors/bad-request-error');
 const {
   getPosts,
   getPostRequest,
   createPostRequest,
   deletePostRequest,
-} = require("../services/post.service");
+} = require('../services/post.service');
 const prisma = new PrismaClient();
 
 const getAllPosts = asyncWrapper(async (req, res) => {
-  const posts = await getPosts();
+  const posts = await getPosts(req.query);
   res.status(200).json(posts);
 });
 
