@@ -34,11 +34,7 @@ const getPosts = async query => {
     skip: Number(query.offset) || 0,
     take: Number(query.limit) || 10,
     include: {
-      tags: {
-        select: {
-          name: true,
-        },
-      },
+      tags: true,
     },
   });
 
