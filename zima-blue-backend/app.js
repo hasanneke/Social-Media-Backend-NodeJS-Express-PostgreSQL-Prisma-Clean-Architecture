@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
-const { notFoundMiddleWare, errorHandlerMiddleware } = require('./app//middleware/index');
+const {
+  notFoundMiddleWare,
+  errorHandlerMiddleware,
+} = require('./app//middleware/index');
 const routes = require('./app/routes/index');
 const expressConfig = require('./frameworks/webserver/express');
 const serverConfig = require('./frameworks/webserver/server');

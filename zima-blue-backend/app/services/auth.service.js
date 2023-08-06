@@ -1,7 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
-const { BadRequestError, NotFoundError, ForbiddenError } = require('../errors/export');
+const { BadRequestError, ForbiddenError } = require('../errors/export');
 const prisma = new PrismaClient();
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/token.utils');
 

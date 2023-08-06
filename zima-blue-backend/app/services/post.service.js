@@ -1,11 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 
-const {
-  ConflictError,
-  NotFoundError,
-  BadRequestError,
-  UnAuthorizedError,
-} = require('../errors/export');
+const { NotFoundError, BadRequestError, UnAuthorizedError } = require('../errors/export');
 const client = new PrismaClient();
 
 const buildFindAllQuery = query => {
