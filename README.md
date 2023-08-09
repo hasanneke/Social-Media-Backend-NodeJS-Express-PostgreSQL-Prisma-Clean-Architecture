@@ -2,15 +2,15 @@
 
 ## Description
 
-This is a full-stack social media app built using Node.js, Express, Prisma, and PostgreSQL on the backend, and Flutter on the frontend. The app allows users to post and comment on various topics, fostering a vibrant community.
+This is a social media backend app built using Node.js, Express, Prisma, and PostgreSQL. The app allows users to post and comment on various topics, fostering a vibrant community.
 
 ## Features
 
 - User registration and authentication using JSON Web Tokens (JWT).
 - Create, read, update, and delete posts.
 - Comment on posts and reply to comments.
-- Like and react to posts and comments.
-- Real-time updates using WebSockets.
+- Like and react to posts and comments. 
+- Real-time updates using WebSockets. (coming soon)
 
 ## Backend Setup
 
